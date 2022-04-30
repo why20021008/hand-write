@@ -24,12 +24,12 @@ class mainwindow(QMainWindow, Ui_Form):
         self.setupUi(self)
         self.pushButton.clicked.connect(lambda: self.lineEdit.setText(getfile()))
         self.pushButton_2.clicked.connect(lambda: self.lineEdit_2.setText(getfile()))
-        self.pushButton_3.clicked.connect(self.yulan)
-        self.pushButton_5.clicked.connect(self.daochu)
-        self.pushButton_4.clicked.connect(self.baocun)
-        self.pushButton_6.clicked.connect(self.zairu)
+        self.pushButton_3.clicked.connect(self.preview)
+        self.pushButton_5.clicked.connect(self.output)
+        self.pushButton_4.clicked.connect(self.save)
+        self.pushButton_6.clicked.connect(self.load)
 
-    def baocun(self):
+    def save(self):
         file_path = savefile()
         if file_path != "":
             file_text = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
@@ -41,7 +41,7 @@ class mainwindow(QMainWindow, Ui_Form):
             with open(file=file_path, mode='w', encoding='utf-8') as file:
                 file.write(file_text)
 
-    def zairu(self):
+    def load(self):
         file_path = getfile()
         if file_path != "":
             shuju = []
@@ -69,9 +69,9 @@ class mainwindow(QMainWindow, Ui_Form):
             self.lineEdit_6.setText(shuju[16])
             self.lineEdit_4.setText(shuju[17])
 
-    def yulan(self):
+    def preview(self):
         text = self.textEdit.toPlainText()
-        ziti = self.lineEdit.text()
+        font = self.lineEdit.text()
         beijing = self.lineEdit_2.text()
         zspjj = self.lineEdit_7.text()
         zspjj_ = self.spinBox.text()
@@ -82,25 +82,25 @@ class mainwindow(QMainWindow, Ui_Form):
         spbhwy_ = self.spinBox_5.text()
         szbhwy_ = self.spinBox_4.text()
         bhxz_ = self.doubleSpinBox_6.text()
-        bianju_left = self.lineEdit_5.text()
-        bianju_right = self.lineEdit_6.text()
-        bianju_up = self.lineEdit_3.text()
-        bianju_down = self.lineEdit_4.text()
+        EdgeDistance_left = self.lineEdit_5.text()
+        EdgeDistance_right = self.lineEdit_6.text()
+        EdgeDistance_up = self.lineEdit_3.text()
+        EdgeDistance_down = self.lineEdit_4.text()
         red = self.lineEdit_10.text()
         green = self.lineEdit_11.text()
         blue = self.lineEdit_12.text()
-        if text == "" or ziti == "" or zspjj == "" or bianju_down == "":
+        if text == "" or font == "" or zspjj == "" or EdgeDistance_down == "":
             QMessageBox.information(self, "检查参数", "请检查参数是否完整", QMessageBox.Yes)
         else:
             template = Template(
                 background=Image.open(beijing),
-                font=ImageFont.truetype(ziti, size=int(ztdx)),
+                font=ImageFont.truetype(font, size=int(ztdx)),
                 line_spacing=int(zszjj) + int(ztdx),
                 fill=(int(red), int(green), int(blue)),  # 字体“颜色”
-                left_margin=int(bianju_left),
-                top_margin=int(bianju_up),
-                right_margin=int(bianju_right) - int(zspjj) * 2,
-                bottom_margin=int(bianju_down),
+                left_margin=int(EdgeDistance_left),
+                top_margin=int(EdgeDistance_up),
+                right_margin=int(EdgeDistance_right) - int(zspjj) * 2,
+                bottom_margin=int(EdgeDistance_down),
                 word_spacing=int(zspjj),
                 line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
                 font_size_sigma=int(ztdx_),  # 字体大小随机扰动
@@ -119,9 +119,9 @@ class mainwindow(QMainWindow, Ui_Form):
                 self.label_11.setPixmap(image)
                 break
 
-    def daochu(self):
+    def output(self):
         text = self.textEdit.toPlainText()
-        ziti = self.lineEdit.text()
+        font = self.lineEdit.text()
         beijing = self.lineEdit_2.text()
         zspjj = self.lineEdit_7.text()
         zspjj_ = self.spinBox.text()
@@ -132,25 +132,25 @@ class mainwindow(QMainWindow, Ui_Form):
         spbhwy_ = self.spinBox_5.text()
         szbhwy_ = self.spinBox_4.text()
         bhxz_ = self.doubleSpinBox_6.text()
-        bianju_left = self.lineEdit_5.text()
-        bianju_right = self.lineEdit_6.text()
-        bianju_up = self.lineEdit_3.text()
-        bianju_down = self.lineEdit_4.text()
+        EdgeDistance_left = self.lineEdit_5.text()
+        EdgeDistance_right = self.lineEdit_6.text()
+        EdgeDistance_up = self.lineEdit_3.text()
+        EdgeDistance_down = self.lineEdit_4.text()
         red = self.lineEdit_10.text()
         green = self.lineEdit_11.text()
         blue = self.lineEdit_12.text()
-        if text == "" or ziti == "" or zspjj == "" or bianju_down == "":
+        if text == "" or font == "" or zspjj == "" or EdgeDistance_down == "":
             QMessageBox.information(self, "检查参数", "请检查参数是否完整", QMessageBox.Yes)
         else:
             template = Template(
                 background=Image.open(beijing),
-                font=ImageFont.truetype(ziti, size=int(ztdx)),
+                font=ImageFont.truetype(font, size=int(ztdx)),
                 line_spacing=int(zszjj) + int(ztdx),
                 fill=(int(red), int(green), int(blue)),  # 字体“颜色”
-                left_margin=int(bianju_left),
-                top_margin=int(bianju_up),
-                right_margin=int(bianju_right) - int(zspjj) * 2,
-                bottom_margin=int(bianju_down),
+                left_margin=int(EdgeDistance_left),
+                top_margin=int(EdgeDistance_up),
+                right_margin=int(EdgeDistance_right) - int(zspjj) * 2,
+                bottom_margin=int(EdgeDistance_down),
                 word_spacing=int(zspjj),
                 line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
                 font_size_sigma=int(ztdx_),  # 字体大小随机扰动
