@@ -1,33 +1,32 @@
 import sys
-from ui import *
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
-from PyQt5.QtCore import Qt
+import os
+from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from PIL import Image, ImageFont, ImageQt
 from handright import Template, handwrite
-import night
+from threading import Thread
 
-
-def getfile():
-    q = QFileDialog.getOpenFileName()
-    return q[0]
-
-
-def savefile():
-    q = QFileDialog.getSaveFileName()
-    return q[0]
+from ui import *
 
 
 class mainwindow(QMainWindow, Ui_Form):
+    sendmsg = pyqtSignal()
+
     def __init__(self):
         QMainWindow.__init__(self)
         Ui_Form.__init__(self)
         self.setupUi(self)
+
         self.pushButton.clicked.connect(lambda: self.lineEdit.setText(getfile()))
         self.pushButton_2.clicked.connect(lambda: self.lineEdit_2.setText(getfile()))
         self.pushButton_3.clicked.connect(self.yulan)
         self.pushButton_5.clicked.connect(self.daochu)
         self.pushButton_4.clicked.connect(self.baocun)
         self.pushButton_6.clicked.connect(self.zairu)
+        self.sendmsg.connect(self.msg)
+
+    def msg(self):
+        QMessageBox.information(self, "完成", "已导出图片到output目录下")
 
     def baocun(self):
         file_path = savefile()
@@ -71,6 +70,7 @@ class mainwindow(QMainWindow, Ui_Form):
 
     def yulan(self):
         text = self.textEdit.toPlainText()
+
         ziti = self.lineEdit.text()
         beijing = self.lineEdit_2.text()
         zspjj = self.lineEdit_7.text()
@@ -89,37 +89,50 @@ class mainwindow(QMainWindow, Ui_Form):
         red = self.lineEdit_10.text()
         green = self.lineEdit_11.text()
         blue = self.lineEdit_12.text()
-        if text == "" or ziti == "" or zspjj == "" or bianju_down == "":
-            QMessageBox.information(self, "检查参数", "请检查参数是否完整", QMessageBox.Yes)
+        if ziti == "" or zspjj == "" or bianju_down == "":
+            QMessageBox.information(self, "检查参数", "请检查参数是否完整")
+        elif text == "":
+            QMessageBox.information(self, "!!!", "未输入要处理的文字")
+        elif not os.path.exists(ziti):
+            QMessageBox.information(self, "路径错误", "字体指定的路径不存在")
+        elif not os.path.exists(beijing):
+            QMessageBox.information(self, "路径错误", "背景指定的路径不存在")
         else:
-            template = Template(
-                background=Image.open(beijing),
-                font=ImageFont.truetype(ziti, size=int(ztdx)),
-                line_spacing=int(zszjj) + int(ztdx),
-                fill=(int(red), int(green), int(blue)),  # 字体“颜色”
-                left_margin=int(bianju_left),
-                top_margin=int(bianju_up),
-                right_margin=int(bianju_right) - int(zspjj) * 2,
-                bottom_margin=int(bianju_down),
-                word_spacing=int(zspjj),
-                line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
-                font_size_sigma=int(ztdx_),  # 字体大小随机扰动
-                word_spacing_sigma=int(zspjj_),  # 字间距随机扰动
-                end_chars="，。",  # 防止特定字符因排版算法的自动换行而出现在行首
-                perturb_x_sigma=int(spbhwy_),  # 笔画横向偏移随机扰动
-                perturb_y_sigma=int(szbhwy_),  # 笔画纵向偏移随机扰动
-                perturb_theta_sigma=float(bhxz_),  # 笔画旋转偏移随机扰动
-            )
-            images = handwrite(text, template)
-            for i, im in enumerate(images):
-                im = im.convert("RGBA")
-                image = ImageQt.toqpixmap(im)
+            def run():
+                self.pushButton_3.setEnabled(False)
+                template = Template(
+                    background=Image.open(beijing),
+                    font=ImageFont.truetype(ziti, size=int(ztdx)),
+                    line_spacing=int(zszjj) + int(ztdx),
+                    fill=(int(red), int(green), int(blue)),  # 字体“颜色”
+                    left_margin=int(bianju_left),
+                    top_margin=int(bianju_up),
+                    right_margin=int(bianju_right) - int(zspjj) * 2,
+                    bottom_margin=int(bianju_down),
+                    word_spacing=int(zspjj),
+                    line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
+                    font_size_sigma=int(ztdx_),  # 字体大小随机扰动
+                    word_spacing_sigma=int(zspjj_),  # 字间距随机扰动
+                    end_chars="，。",  # 防止特定字符因排版算法的自动换行而出现在行首
+                    perturb_x_sigma=int(spbhwy_),  # 笔画横向偏移随机扰动
+                    perturb_y_sigma=int(szbhwy_),  # 笔画纵向偏移随机扰动
+                    perturb_theta_sigma=float(bhxz_),  # 笔画旋转偏移随机扰动
+                )
+                images = handwrite(text, template)
+                for i, im in enumerate(images):
+                    im = im.convert("RGBA")
+                    image = ImageQt.toqpixmap(im)
 
-                self.label_11.setScaledContents(True)
-                self.label_11.setPixmap(image)
-                break
+                    self.label_11.setScaledContents(True)
+                    self.label_11.setPixmap(image)
+                    self.pushButton_3.setEnabled(True)
+                    break
+
+            t = Thread(target=run)
+            t.start()
 
     def daochu(self):
+
         text = self.textEdit.toPlainText()
         ziti = self.lineEdit.text()
         beijing = self.lineEdit_2.text()
@@ -139,37 +152,63 @@ class mainwindow(QMainWindow, Ui_Form):
         red = self.lineEdit_10.text()
         green = self.lineEdit_11.text()
         blue = self.lineEdit_12.text()
-        if text == "" or ziti == "" or zspjj == "" or bianju_down == "":
-            QMessageBox.information(self, "检查参数", "请检查参数是否完整", QMessageBox.Yes)
+        if ziti == "" or zspjj == "" or bianju_down == "":
+            QMessageBox.information(self, "检查参数", "请检查参数是否完整")
+        elif text == "":
+            QMessageBox.information(self, "!!!", "未输入要处理的文字")
+        elif not os.path.exists(ziti):
+            QMessageBox.information(self, "路径错误", "字体指定的路径不存在")
+        elif not os.path.exists(beijing):
+            QMessageBox.information(self, "路径错误", "背景指定的路径不存在")
         else:
-            template = Template(
-                background=Image.open(beijing),
-                font=ImageFont.truetype(ziti, size=int(ztdx)),
-                line_spacing=int(zszjj) + int(ztdx),
-                fill=(int(red), int(green), int(blue)),  # 字体“颜色”
-                left_margin=int(bianju_left),
-                top_margin=int(bianju_up),
-                right_margin=int(bianju_right) - int(zspjj) * 2,
-                bottom_margin=int(bianju_down),
-                word_spacing=int(zspjj),
-                line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
-                font_size_sigma=int(ztdx_),  # 字体大小随机扰动
-                word_spacing_sigma=int(zspjj_),  # 字间距随机扰动
-                end_chars="，。",  # 防止特定字符因排版算法的自动换行而出现在行首
-                perturb_x_sigma=int(spbhwy_),  # 笔画横向偏移随机扰动
-                perturb_y_sigma=int(szbhwy_),  # 笔画纵向偏移随机扰动
-                perturb_theta_sigma=float(bhxz_),  # 笔画旋转偏移随机扰动
-            )
-            images = handwrite(text, template)
-            for i, im in enumerate(images):
-                assert isinstance(im, Image.Image)
-                im.save("./{}.png".format(i))
+            if not os.path.exists("./output"):
+                os.mkdir("./output")
+            self.pushButton_5.setEnabled(False)
+
+            def run():
+                template = Template(
+                    background=Image.open(beijing),
+                    font=ImageFont.truetype(ziti, size=int(ztdx)),
+                    line_spacing=int(zszjj) + int(ztdx),
+                    fill=(int(red), int(green), int(blue)),  # 字体“颜色”
+                    left_margin=int(bianju_left),
+                    top_margin=int(bianju_up),
+                    right_margin=int(bianju_right) - int(zspjj) * 2,
+                    bottom_margin=int(bianju_down),
+                    word_spacing=int(zspjj),
+                    line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
+                    font_size_sigma=int(ztdx_),  # 字体大小随机扰动
+                    word_spacing_sigma=int(zspjj_),  # 字间距随机扰动
+                    end_chars="，。",  # 防止特定字符因排版算法的自动换行而出现在行首
+                    perturb_x_sigma=int(spbhwy_),  # 笔画横向偏移随机扰动
+                    perturb_y_sigma=int(szbhwy_),  # 笔画纵向偏移随机扰动
+                    perturb_theta_sigma=float(bhxz_),  # 笔画旋转偏移随机扰动
+                )
+                images = handwrite(text, template)
+                for i, im in enumerate(images):
+                    assert isinstance(im, Image.Image)
+                    im.save("./output/{}.png".format(i))
+                self.sendmsg.emit()
+                self.pushButton_5.setEnabled(True)
+
+            t = Thread(target=run)
+            t.start()
+
+
+
+
+def getfile():
+    q = QFileDialog.getOpenFileName()
+    return q[0]
+
+
+def savefile():
+    q = QFileDialog.getSaveFileName()
+    return q[0]
 
 
 if __name__ == '__main__':
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication(sys.argv)
     ui = mainwindow()  # 创建自定义ui界面
     ui.show()
-    sys.exit(app.exec_())
-
+    sys.exit(app.exec())

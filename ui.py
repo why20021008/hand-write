@@ -1,13 +1,14 @@
-# -*- coding: utf-8 -*-
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
+        Form.setWindowModality(QtCore.Qt.WindowModality.NonModal)
+        Form.setEnabled(True)
         Form.resize(848, 592)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
@@ -15,23 +16,37 @@ class Ui_Form(object):
         Form.setMinimumSize(QtCore.QSize(848, 592))
         Form.setMaximumSize(QtCore.QSize(848, 592))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/nt/3d.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("./ui/3d.ico"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         Form.setWindowIcon(icon)
         Form.setWindowOpacity(0.98)
         Form.setAccessibleDescription("")
-        Form.setLayoutDirection(QtCore.Qt.LeftToRight)
+        Form.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        Form.setStyleSheet("\n"
+"font: 10pt \"楷体\";\n"
+"\n"
+"border-radius: 3px;\n"
+"\n"
+"\n"
+"")
         self.textEdit = QtWidgets.QTextEdit(Form)
         self.textEdit.setGeometry(QtCore.QRect(430, 30, 411, 221))
+        self.textEdit.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.textEdit.setAutoFillBackground(False)
+        self.textEdit.setStyleSheet("border-radius: 30px;")
         self.textEdit.setObjectName("textEdit")
         self.lineEdit = QtWidgets.QLineEdit(Form)
         self.lineEdit.setGeometry(QtCore.QRect(480, 280, 311, 20))
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(792, 279, 51, 23))
+        self.pushButton.setGeometry(QtCore.QRect(792, 281, 45, 18))
+        self.pushButton.setStyleSheet("background-color: rgb(221, 255, 235);\n"
+"")
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(Form)
-        self.pushButton_2.setGeometry(QtCore.QRect(792, 309, 51, 23))
+        self.pushButton_2.setGeometry(QtCore.QRect(792, 311, 45, 18))
+        self.pushButton_2.setStyleSheet("background-color: rgb(221, 255, 235);\n"
+"")
         self.pushButton_2.setObjectName("pushButton_2")
         self.lineEdit_2 = QtWidgets.QLineEdit(Form)
         self.lineEdit_2.setGeometry(QtCore.QRect(480, 310, 311, 20))
@@ -40,11 +55,11 @@ class Ui_Form(object):
         self.lineEdit_3 = QtWidgets.QLineEdit(Form)
         self.lineEdit_3.setGeometry(QtCore.QRect(720, 357, 61, 24))
         self.lineEdit_3.setText("")
-        self.lineEdit_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.lineEdit_4 = QtWidgets.QLineEdit(Form)
         self.lineEdit_4.setGeometry(QtCore.QRect(720, 431, 61, 24))
-        self.lineEdit_4.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit_4.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.lineEdit_4.setObjectName("lineEdit_4")
         self.lineEdit_5 = QtWidgets.QLineEdit(Form)
         self.lineEdit_5.setGeometry(QtCore.QRect(697, 380, 24, 51))
@@ -81,30 +96,45 @@ class Ui_Form(object):
         self.spinBox_5.setObjectName("spinBox_5")
         self.doubleSpinBox_6 = QtWidgets.QDoubleSpinBox(Form)
         self.doubleSpinBox_6.setGeometry(QtCore.QRect(600, 560, 51, 20))
-        self.doubleSpinBox_6.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.doubleSpinBox_6.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.doubleSpinBox_6.setSingleStep(0.01)
         self.doubleSpinBox_6.setProperty("value", 0.05)
         self.doubleSpinBox_6.setObjectName("doubleSpinBox_6")
         self.pushButton_3 = QtWidgets.QPushButton(Form)
         self.pushButton_3.setGeometry(QtCore.QRect(700, 500, 101, 31))
+        self.pushButton_3.setStyleSheet("\n"
+"background-color: rgb(157, 220, 128);")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_5 = QtWidgets.QPushButton(Form)
         self.pushButton_5.setGeometry(QtCore.QRect(700, 540, 101, 31))
+        self.pushButton_5.setStyleSheet("\n"
+"background-color: rgb(157, 220, 128);")
         self.pushButton_5.setObjectName("pushButton_5")
         self.label_11 = QtWidgets.QLabel(Form)
         self.label_11.setGeometry(QtCore.QRect(3, 1, 420, 593))
         self.label_11.setText("")
-        self.label_11.setTextFormat(QtCore.Qt.PlainText)
+        self.label_11.setTextFormat(QtCore.Qt.TextFormat.PlainText)
         self.label_11.setObjectName("label_11")
         self.listView = QtWidgets.QListView(Form)
         self.listView.setGeometry(QtCore.QRect(-5, -9, 861, 611))
-        self.listView.setStyleSheet("background-image: url(:/night/night.png);")
+        self.listView.setStyleSheet("background-image: url(./ui/night.png);\n"
+"\n"
+"\n"
+"color: rgb(11, 214, 255);\n"
+"\n"
+"")
         self.listView.setObjectName("listView")
         self.pushButton_4 = QtWidgets.QPushButton(Form)
-        self.pushButton_4.setGeometry(QtCore.QRect(514, 334, 74, 23))
+        self.pushButton_4.setGeometry(QtCore.QRect(600, 334, 51, 23))
+        self.pushButton_4.setAutoFillBackground(False)
+        self.pushButton_4.setStyleSheet("background-color: rgb(221, 255, 235);\n"
+"")
         self.pushButton_4.setObjectName("pushButton_4")
         self.pushButton_6 = QtWidgets.QPushButton(Form)
-        self.pushButton_6.setGeometry(QtCore.QRect(599, 334, 51, 23))
+        self.pushButton_6.setGeometry(QtCore.QRect(514, 334, 74, 23))
+        self.pushButton_6.setStyleSheet("background-color: rgb(221, 255, 235);\n"
+"")
+        self.pushButton_6.setAutoDefault(False)
         self.pushButton_6.setObjectName("pushButton_6")
         self.lineEdit_10 = QtWidgets.QLineEdit(Form)
         self.lineEdit_10.setGeometry(QtCore.QRect(727, 259, 31, 20))
@@ -157,8 +187,7 @@ class Ui_Form(object):
         self.pushButton_3.setText(_translate("Form", "预览"))
         self.pushButton_5.setText(_translate("Form", "导出"))
         self.pushButton_4.setText(_translate("Form", "保存"))
-        self.pushButton_6.setText(_translate("Form", "载入"))
+        self.pushButton_6.setText(_translate("Form", "载入预设"))
         self.lineEdit_10.setText(_translate("Form", "0"))
         self.lineEdit_11.setText(_translate("Form", "0"))
         self.lineEdit_12.setText(_translate("Form", "0"))
-
