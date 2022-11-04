@@ -1,8 +1,0 @@
-<RCC>
-  <qresource prefix="night">
-    <file>night.png</file>
-  </qresource>
-  <qresource prefix="nt">
-    <file>3d.ico</file>
-  </qresource>
-</RCC>
