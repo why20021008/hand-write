@@ -5,7 +5,7 @@
 # Qt版本
 
 ## 贡献者
-why20021008（人走茶凉le）编写核心代码，Vincent Zhong负责文档撰写，Qt版本的注释，并优化变量、函数、属性、方法的命名，去除歧义。
+why20021008（人走茶凉le）编写核心代码，Vincent Zhong（思维悦动）负责文档撰写，Qt版本的注释，并优化变量、函数、属性、方法的命名，去除歧义。
 
 ## 开发环境构建
 
@@ -40,3 +40,4 @@ pip install -r requirements.txt
 
 # 参考资料
 [Qt for Python文档](https://doc.qt.io/qtforpython-6/quickstart.html)
+[handright使用教程](https://github.com/Gsllchb/Handright/blob/master/docs/tutorial.md)
