@@ -17,7 +17,7 @@ class mainwindow(QMainWindow, Ui_Form):
         # Ui_Form.__init__(self)
         self.setupUi(self)
         # 按钮发送信号
-        self.font_selection_button.clicked.connect(lambda: self.font_selection_path.setText(getfile()))
+        self.font_selection_button.clicked.connect(lambda: self.handwrite_font.setText(getfile()))
         self.background_selection_button.clicked.connect(lambda: self.background_selection_path.setText(getfile()))
         self.preview_button.clicked.connect(self.preview)
         self.export_button.clicked.connect(self.export)
@@ -33,8 +33,8 @@ class mainwindow(QMainWindow, Ui_Form):
         file_path = savefile()
         if file_path != "":
             file_text = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
-                self.r_edit.text(), self.g_edit.text(), self.b_edit.text(), self.font_selection_path.text(),
-                self.background_selection_path.text(), self.word_horizontal_margin_edit.text(), self.spinBox.text(), self.lineEdit_8.text(),
+                self.red.text(), self.green.text(), self.blue.text(), self.handwrite_font.text(),
+                self.background_selection_path.text(), self.word_horizontal_margin_edit.text(), self.word_horizontal_margin_box.text(), self.word_vertical_margin_edit.text(),
                 self.word_vertical_margin_box.text(), self.font_size_edit.text(), self.font_size_box.text(), self.horizontal_stroke_offset.text(),
                 self.vertical_stroke_offset.text(), self.stroke_rotation_box.text(), self.top_margin_edit.text(), self.left_margin_edit.text(),
                 self.right_margin_edit.text(), self.bottom_margin_edit.text())
@@ -50,14 +50,14 @@ class mainwindow(QMainWindow, Ui_Form):
                     for line in f.readlines():
                         line = line.strip('\n')  # 去掉列表中每一个元素的换行符
                         data.append(line)
-            self.r_edit.setText(data[0])
-            self.g_edit.setText(data[1])
-            self.b_edit.setText(data[2])
-            self.font_selection_path.setText(data[3])
+            self.red.setText(data[0])
+            self.green.setText(data[1])
+            self.blue.setText(data[2])
+            self.handwrite_font.setText(data[3])
             self.background_selection_path.setText(data[4])
             self.word_horizontal_margin_edit.setText(data[5])
-            self.spinBox.setValue(int(data[6]))
-            self.lineEdit_8.setText(data[7])
+            self.word_horizontal_margin_box.setValue(int(data[6]))
+            self.word_vertical_margin_edit.setText(data[7])
             self.word_vertical_margin_box.setValue(int(data[8]))
             self.font_size_edit.setText(data[9])
             self.font_size_box.setValue(int(data[10]))
@@ -70,13 +70,13 @@ class mainwindow(QMainWindow, Ui_Form):
             self.bottom_margin_edit.setText(data[17])
     # 预览
     def preview(self):
-        text = self.pending_text_editor.toPlainText()
-        font = self.font_selection_path.text()
+        text = self.pending_text.toPlainText()
+        font = self.handwrite_font.text()
         beijing = self.background_selection_path.text()
         # 字水平间距
         zspjj = self.word_horizontal_margin_edit.text()
-        zspjj_ = self.spinBox.text()
-        zszjj = self.lineEdit_8.text()
+        zspjj_ = self.word_horizontal_margin_box.text()
+        zszjj = self.word_vertical_margin_edit.text()
         zszjj_ = self.word_vertical_margin_box.text()
         # 字体大小
         ztdx = self.font_size_edit.text()
@@ -92,9 +92,9 @@ class mainwindow(QMainWindow, Ui_Form):
         bianju_right = self.right_margin_edit.text()
         bianju_up = self.top_margin_edit.text()
         bianju_down = self.bottom_margin_edit.text()
-        red = self.r_edit.text()
-        green = self.g_edit.text()
-        blue = self.b_edit.text()
+        red = self.red.text()
+        green = self.green.text()
+        blue = self.blue.text()
         if font == "" or zspjj == "" or bianju_down == "":
             QMessageBox.information(self, "检查参数", "请检查参数是否完整")
         elif text == "":
@@ -140,32 +140,32 @@ class mainwindow(QMainWindow, Ui_Form):
     # 导出
     def export(self):
 
-        text = self.pending_text_editor.toPlainText()
-        font = self.font_selection_path.text()
-        background = self.background_selection_path.text()
-        zspjj = self.word_horizontal_margin_edit.text()
-        zspjj_ = self.spinBox.text()
-        zszjj = self.lineEdit_8.text()
-        zszjj_ = self.word_vertical_margin_box.text()
-        ztdx = self.font_size_edit.text()
-        ztdx_ = self.font_size_box.text()
-        spbhwy_ = self.horizontal_stroke_offset.text()
-        szbhwy_ = self.vertical_stroke_offset.text()
-        bhxz_ = self.stroke_rotation_box.text()
-        bianju_left = self.left_margin_edit.text()
-        bianju_right = self.right_margin_edit.text()
-        bianju_up = self.top_margin_edit.text()
-        bianju_down = self.bottom_margin_edit.text()
-        red = self.r_edit.text()
-        green = self.g_edit.text()
-        blue = self.b_edit.text()
-        if font == "" or zspjj == "" or bianju_down == "":
+        待处理文字 = self.pending_text.toPlainText()
+        字体 = self.handwrite_font.text()
+        背景 = self.background_selection_path.text()
+        字水平间距 = self.word_horizontal_margin_edit.text()
+        字水平间距干扰 = self.word_horizontal_margin_box.text()
+        字竖直间距 = self.word_vertical_margin_edit.text()
+        字竖直间距干扰 = self.word_vertical_margin_box.text()
+        字体大小 = self.font_size_edit.text()
+        字体大小干扰 = self.font_size_box.text()
+        笔画水平干扰 = self.horizontal_stroke_offset.text()
+        笔画竖直干扰 = self.vertical_stroke_offset.text()
+        笔画旋转干扰 = self.stroke_rotation_box.text()
+        左边距 = self.left_margin_edit.text()
+        右边距 = self.right_margin_edit.text()
+        上边距 = self.top_margin_edit.text()
+        下边距 = self.bottom_margin_edit.text()
+        红色 = self.red.text()
+        绿色 = self.green.text()
+        蓝色 = self.blue.text()
+        if 字体 == "" or 字水平间距 == "" or 下边距 == "":
             QMessageBox.information(self, "检查参数", "请检查参数是否完整")
-        elif text == "":
+        elif 待处理文字 == "":
             QMessageBox.information(self, "!!!", "未输入要处理的文字")
-        elif not os.path.exists(font):
+        elif not os.path.exists(字体):
             QMessageBox.information(self, "路径错误", "字体指定的路径不存在")
-        elif not os.path.exists(background):
+        elif not os.path.exists(背景):
             QMessageBox.information(self, "路径错误", "背景指定的路径不存在")
         else:
             if not os.path.exists("./output"):
@@ -174,24 +174,24 @@ class mainwindow(QMainWindow, Ui_Form):
 
             def run():
                 template = Template(
-                    background=Image.open(background),
-                    font=ImageFont.truetype(font, size=int(ztdx)),
-                    line_spacing=int(zszjj) + int(ztdx),
-                    fill=(int(red), int(green), int(blue)),  # 字体“颜色”
-                    left_margin=int(bianju_left),
-                    top_margin=int(bianju_up),
-                    right_margin=int(bianju_right) - int(zspjj) * 2,
-                    bottom_margin=int(bianju_down),
-                    word_spacing=int(zspjj),
-                    line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
-                    font_size_sigma=int(ztdx_),  # 字体大小随机扰动
-                    word_spacing_sigma=int(zspjj_),  # 字间距随机扰动
+                    background=Image.open(背景),
+                    font=ImageFont.truetype(字体, size=int(字体大小)),
+                    line_spacing=int(字竖直间距) + int(字体大小),
+                    fill=(int(红色), int(绿色), int(蓝色)),  # 字体“颜色”
+                    left_margin=int(左边距),
+                    top_margin=int(上边距),
+                    right_margin=int(右边距) - int(字水平间距) * 2,
+                    bottom_margin=int(下边距),
+                    word_spacing=int(字水平间距),
+                    line_spacing_sigma=int(字竖直间距干扰),  # 行间距随机扰动
+                    font_size_sigma=int(字体大小干扰),  # 字体大小随机扰动
+                    word_spacing_sigma=int(字水平间距干扰),  # 字间距随机扰动
                     end_chars="，。",  # 防止特定字符因排版算法的自动换行而出现在行首
-                    perturb_x_sigma=int(spbhwy_),  # 笔画横向偏移随机扰动
-                    perturb_y_sigma=int(szbhwy_),  # 笔画纵向偏移随机扰动
-                    perturb_theta_sigma=float(bhxz_),  # 笔画旋转偏移随机扰动
+                    perturb_x_sigma=int(笔画水平干扰),  # 笔画横向偏移随机扰动
+                    perturb_y_sigma=int(笔画竖直干扰),  # 笔画纵向偏移随机扰动
+                    perturb_theta_sigma=float(笔画旋转干扰),  # 笔画旋转偏移随机扰动
                 )
-                images = handwrite(text, template)
+                images = handwrite(待处理文字, template)
                 for i, im in enumerate(images):
                     assert isinstance(im, Image.Image)
                     im.save("./output/{}.png".format(i))
@@ -201,6 +201,40 @@ class mainwindow(QMainWindow, Ui_Form):
             t = Thread(target=run)
             t.start()
 
+    def check(self):
+        '''检查是否合规'''
+        pass
+    def do_run(self):
+        '''运行handright代码'''
+        try:
+            if not os.path.exists("./output"):
+                os.mkdir("./output")
+            # 处理过程中导出按钮不可用，防止二次导出。
+            self.export_button.setEnabled(False)
+            template = Template(
+                background=Image.open(self.background_selection_path.text())
+                font= ImageFont.truetype(self.handwrite_font.text(), size=int(self.font_size_edit.text())),
+                line_spacing=int(self.word_vertical_margin_edit.text()) + int(self.font_size_edit.text()),
+                fill=(int(self.red.text()), int(self.green.text()), int(self.blue.text())),  # 字体“颜色”
+                left_margin=int(self.left_margin_edit.text()),
+                top_margin=int(self.top_margin_edit.text()),
+                right_margin=int(self.right_margin_edit.text()) - int(self.word_horizontal_margin_edit.text()) * 2,
+                bottom_margin=int(self.bottom_margin_edit.text()),
+                word_spacing=int(self.word_horizontal_margin_edit.text()),
+                line_spacing_sigma=int(self.word_vertical_margin_box.text()),  # 行间距随机扰动
+                font_size_sigma=int(self.font_size_box.text()),  # 字体大小随机扰动
+                word_spacing_sigma=int(self.word_horizontal_margin_box.text()),  # 字间距随机扰动
+                end_chars="，。",  # 防止特定字符因排版算法的自动换行而出现在行首
+                perturb_x_sigma=int(self.horizontal_stroke_offset.text()),  # 笔画横向偏移随机扰动
+                perturb_y_sigma=int(self.vertical_stroke_offset.text()),  # 笔画纵向偏移随机扰动
+                perturb_theta_sigma=float(self.stroke_rotation_box.text())  # 笔画旋转偏移随机扰动
+            )
+            images = handwrite(self.pending_text, template)
+            return images
+        except:
+            pass
+        pass
+        
 
 
 

@@ -34,18 +34,18 @@ class Ui_Form(object):
         Form.setStyleSheet("font: 10pt 楷体; border-radius: 3px;")
 
         # 待处理文本编辑器
-        self.pending_text_editor = QtWidgets.QTextEdit(Form)
-        self.pending_text_editor.setGeometry(QtCore.QRect(430, 30, 411, 221))
-        self.pending_text_editor.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.pending_text_editor.setAutoFillBackground(False)
-        self.pending_text_editor.setStyleSheet("border-radius: 30px;")
-        self.pending_text_editor.setObjectName("textEdit")
+        self.pending_text = QtWidgets.QTextEdit(Form)
+        self.pending_text.setGeometry(QtCore.QRect(430, 30, 411, 221))
+        self.pending_text.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.pending_text.setAutoFillBackground(False)
+        self.pending_text.setStyleSheet("border-radius: 30px;")
+        self.pending_text.setObjectName("textEdit")
 
         # 字体选择路径
-        self.font_selection_path = QtWidgets.QLineEdit(Form)
-        self.font_selection_path.setGeometry(QtCore.QRect(480, 280, 311, 20))
-        self.font_selection_path.setText("")
-        self.font_selection_path.setObjectName("lineEdit")
+        self.handwrite_font = QtWidgets.QLineEdit(Form)
+        self.handwrite_font.setGeometry(QtCore.QRect(480, 280, 311, 20))
+        self.handwrite_font.setText("")
+        self.handwrite_font.setObjectName("lineEdit")
 
         # 字体选择按钮
         self.font_selection_button = QtWidgets.QPushButton(Form)
@@ -90,9 +90,9 @@ class Ui_Form(object):
         self.right_margin_edit.setObjectName("lineEdit_6")
 
         # 字水平边距设置框
-        self.spinBox = QtWidgets.QSpinBox(Form)
-        self.spinBox.setGeometry(QtCore.QRect(600, 360, 51, 20))
-        self.spinBox.setObjectName("spinBox")
+        self.word_horizontal_margin_box = QtWidgets.QSpinBox(Form)
+        self.word_horizontal_margin_box.setGeometry(QtCore.QRect(600, 360, 51, 20))
+        self.word_horizontal_margin_box.setObjectName("spinBox")
 
         # 字水平边距文本框
         self.word_horizontal_margin_edit = QtWidgets.QLineEdit(Form)
@@ -100,9 +100,9 @@ class Ui_Form(object):
         self.word_horizontal_margin_edit.setObjectName("lineEdit_7")
 
         # 字竖直边距文本框
-        self.lineEdit_8 = QtWidgets.QLineEdit(Form)
-        self.lineEdit_8.setGeometry(QtCore.QRect(514, 400, 74, 20))
-        self.lineEdit_8.setObjectName("lineEdit_8")
+        self.word_vertical_margin_edit = QtWidgets.QLineEdit(Form)
+        self.word_vertical_margin_edit.setGeometry(QtCore.QRect(514, 400, 74, 20))
+        self.word_vertical_margin_edit.setObjectName("lineEdit_8")
         
         # 字竖直边距设置框
         self.word_vertical_margin_box = QtWidgets.QSpinBox(Form)
@@ -179,24 +179,24 @@ class Ui_Form(object):
         self.load_utton.setObjectName("pushButton_6")
         
         # R文本框
-        self.r_edit = QtWidgets.QLineEdit(Form)
-        self.r_edit.setGeometry(QtCore.QRect(727, 259, 31, 20))
-        self.r_edit.setObjectName("lineEdit_10")
+        self.red = QtWidgets.QLineEdit(Form)
+        self.red.setGeometry(QtCore.QRect(727, 259, 31, 20))
+        self.red.setObjectName("lineEdit_10")
         
         # G文本框
-        self.g_edit = QtWidgets.QLineEdit(Form)
-        self.g_edit.setGeometry(QtCore.QRect(760, 259, 31, 20))
-        self.g_edit.setObjectName("lineEdit_11")
-        self.b_edit = QtWidgets.QLineEdit(Form)
+        self.green = QtWidgets.QLineEdit(Form)
+        self.green.setGeometry(QtCore.QRect(760, 259, 31, 20))
+        self.green.setObjectName("lineEdit_11")
+        self.blue = QtWidgets.QLineEdit(Form)
         
         # B文本框
-        self.b_edit.setGeometry(QtCore.QRect(793, 259, 31, 20))
-        self.b_edit.setObjectName("lineEdit_12")
+        self.blue.setGeometry(QtCore.QRect(793, 259, 31, 20))
+        self.blue.setObjectName("lineEdit_12")
         
         # 显示控件？
         self.main_interface.raise_()
-        self.pending_text_editor.raise_()
-        self.font_selection_path.raise_()
+        self.pending_text.raise_()
+        self.handwrite_font.raise_()
         self.font_selection_button.raise_()
         self.background_selection_button.raise_()
         self.background_selection_path.raise_()
@@ -204,9 +204,9 @@ class Ui_Form(object):
         self.bottom_margin_edit.raise_()
         self.left_margin_edit.raise_()
         self.right_margin_edit.raise_()
-        self.spinBox.raise_()
+        self.word_horizontal_margin_box.raise_()
         self.word_horizontal_margin_edit.raise_()
-        self.lineEdit_8.raise_()
+        self.word_vertical_margin_edit.raise_()
         self.word_vertical_margin_box.raise_()
         self.font_size_edit.raise_()
         self.font_size_box.raise_()
@@ -218,9 +218,9 @@ class Ui_Form(object):
         self.preview_area.raise_()
         self.save_button.raise_()
         self.load_utton.raise_()
-        self.r_edit.raise_()
-        self.g_edit.raise_()
-        self.b_edit.raise_()
+        self.red.raise_()
+        self.green.raise_()
+        self.blue.raise_()
         self.retranslateUi(Form)
         # self.stroke_rotation_box.setStyleSheet("background-color: rgb(255, 0, 0);")  # 高亮查找特定位置
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -229,8 +229,8 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "手写模拟"))
-        self.pending_text_editor.setPlaceholderText(_translate("Form", "本软件主要基于handwrite库开发，仅供学习交流。作者只是一名为手写作业发愁的大学生，想要源码或者想要添加功能、反馈bug的，可以联系作者b站：人走茶凉le"))
-        self.font_selection_path.setAccessibleDescription(_translate("Form", "1111"))
+        self.pending_text.setPlaceholderText(_translate("Form", "本软件主要基于handwrite库开发，仅供学习交流。作者只是一名为手写作业发愁的大学生，想要源码或者想要添加功能、反馈bug的，可以联系作者b站：人走茶凉le"))
+        self.handwrite_font.setAccessibleDescription(_translate("Form", "1111"))
         self.font_selection_button.setText(_translate("Form", "选择"))
         self.background_selection_button.setText(_translate("Form", "选择"))
         self.background_selection_path.setAccessibleDescription(_translate("Form", "1111"))
@@ -238,6 +238,6 @@ class Ui_Form(object):
         self.export_button.setText(_translate("Form", "导出"))
         self.save_button.setText(_translate("Form", "保存"))
         self.load_utton.setText(_translate("Form", "载入预设"))
-        self.r_edit.setText(_translate("Form", "0"))
-        self.g_edit.setText(_translate("Form", "0"))
-        self.b_edit.setText(_translate("Form", "0"))
+        self.red.setText(_translate("Form", "0"))
+        self.green.setText(_translate("Form", "0"))
+        self.blue.setText(_translate("Form", "0"))
