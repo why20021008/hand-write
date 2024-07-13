@@ -11,22 +11,20 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
-
-    # 假设你已经有了一个脚本来构建EXE，或者在这里直接调用PyInstaller
-    # 如果是调用PyInstaller，请确保你的环境中已安装了PyInstaller
+      uses: actions/checkout@v4
+    - name: Install requirements.txt
+      run: pip install -r requirements.txt
     - name: Install PyInstaller
-      run: |
-        pip install pyinstaller
+      run: pip install pyinstaller
     - name: Build EXE with PyInstaller
-      run: |
-        pyinstaller --onefile your_main_script.py # 替换为你的主脚本名
+      run: pyinstaller -F main.py --windowed -i "ui/3d.ico" --add-data "ui/night.png:ui" -n "手写模拟"
 
     # 打包EXE和UI文件夹为ZIP
     - name: Package EXE and UI folder
       run: |
+        cp ui dist
         cd dist
-        7z a ../../../release_package.zip your_main_script.exe ../ui # 调整路径和文件名
+        7z a ../../../release_package.zip 手写模拟.exe ../ui # 调整路径和文件名
         cd ..
 
     # 创建GitHub Release并上传ZIP文件
@@ -43,7 +41,7 @@ jobs:
 
     # 上传ZIP文件为Release Asset
     - name: Upload Release Asset
-      id: upload-release-asset 
+      id: upload-release-asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
