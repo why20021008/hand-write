@@ -1,0 +1,54 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main # 当推送至main分支时触发
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest # 使用Windows环境进行构建
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 假设你已经有了一个脚本来构建EXE，或者在这里直接调用PyInstaller
+    # 如果是调用PyInstaller，请确保你的环境中已安装了PyInstaller
+    - name: Install PyInstaller
+      run: |
+        pip install pyinstaller
+    - name: Build EXE with PyInstaller
+      run: |
+        pyinstaller --onefile your_main_script.py # 替换为你的主脚本名
+
+    # 打包EXE和UI文件夹为ZIP
+    - name: Package EXE and UI folder
+      run: |
+        cd dist
+        7z a ../../../release_package.zip your_main_script.exe ../ui # 调整路径和文件名
+        cd ..
+
+    # 创建GitHub Release并上传ZIP文件
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 自动授权的Token
+      with:
+        tag_name: v${{ github.run_number }} # 可以根据需要修改tag命名规则
+        release_name: Release ${{ github.run_number }}
+        draft: false
+        prerelease: false
+
+    # 上传ZIP文件为Release Asset
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # 从上一步骤中获取上传URL
+        asset_path: ./release_package.zip
+        asset_name: Release-${{ github.run_number }}.zip
+        asset_content_type: application/zip
