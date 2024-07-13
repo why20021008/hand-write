@@ -22,11 +22,11 @@ jobs:
     # 打包EXE和UI文件夹为ZIP
     - name: Package EXE and UI folder
       run: |
-        cp ui dist
+        Copy-Item -Path "ui" -Destination "dist" -Recurse
         cd dist
-        7z a ../../../release_package.zip 手写模拟.exe ../ui # 调整路径和文件名
-        cd ..
+        7z a ./release_package.zip 手写模拟.exe ui # 修正路径和假设ui已复制到dist中
 
+   
     # 创建GitHub Release并上传ZIP文件
     - name: Create GitHub Release
       id: create_release
