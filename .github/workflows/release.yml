@@ -34,7 +34,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 自动授权的Token
       with:
-        tag_name: v${{ github.run_number }} # 可以根据需要修改tag命名规则
+        tag_name: v0.0.${{ github.run_number }} # 可以根据需要修改tag命名规则
         release_name: Release ${{ github.run_number }}
         draft: false
         prerelease: false
@@ -47,6 +47,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # 从上一步骤中获取上传URL
-        asset_path: ./release_package.zip
+        asset_path: dist/release_package.zip
         asset_name: Release-${{ github.run_number }}.zip
         asset_content_type: application/zip
