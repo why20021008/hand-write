@@ -34,7 +34,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 自动授权的Token
       with:
-        tag_name: v0.0.${{ github.run_number }} # 可以根据需要修改tag命名规则
+        tag_name: v${{ github.run_number }} # 可以根据需要修改tag命名规则
         release_name: Release ${{ github.run_number }}
         draft: false
         prerelease: false
