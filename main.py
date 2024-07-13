@@ -1,7 +1,7 @@
 import sys
 import os
-from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from PIL import Image, ImageFont, ImageQt
 from handright import Template, handwrite
 from threading import Thread
@@ -10,191 +10,171 @@ from ui import *
 
 
 class mainwindow(QMainWindow, Ui_Form):
-    sendmsg = pyqtSignal()
+    sendmsg = Signal()
 
     def __init__(self):
         QMainWindow.__init__(self)
-        Ui_Form.__init__(self)
+        # Ui_Form.__init__(self)
         self.setupUi(self)
-
-        self.pushButton.clicked.connect(lambda: self.lineEdit.setText(getfile()))
-        self.pushButton_2.clicked.connect(lambda: self.lineEdit_2.setText(getfile()))
-        self.pushButton_3.clicked.connect(self.yulan)
-        self.pushButton_5.clicked.connect(self.daochu)
-        self.pushButton_4.clicked.connect(self.baocun)
-        self.pushButton_6.clicked.connect(self.zairu)
+        # 按钮发送信号
+        self.font_selection_button.clicked.connect(lambda: self.font.setText(getfile()))
+        self.background_selection_button.clicked.connect(lambda: self.background.setText(getfile()))
+        self.preview_button.clicked.connect(self.preview)
+        self.export_button.clicked.connect(self.export)
+        self.save_button.clicked.connect(self.save)
+        self.load_utton.clicked.connect(self.load)
         self.sendmsg.connect(self.msg)
-
+    # 导出完成消息窗
     def msg(self):
         QMessageBox.information(self, "完成", "已导出图片到output目录下")
 
-    def baocun(self):
+    # 保存
+    def save(self):
         file_path = savefile()
         if file_path != "":
             file_text = "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
-                self.lineEdit_10.text(), self.lineEdit_11.text(), self.lineEdit_12.text(), self.lineEdit.text(),
-                self.lineEdit_2.text(), self.lineEdit_7.text(), self.spinBox.text(), self.lineEdit_8.text(),
-                self.spinBox_2.text(), self.lineEdit_9.text(), self.spinBox_3.text(), self.spinBox_5.text(),
-                self.spinBox_4.text(), self.doubleSpinBox_6.text(), self.lineEdit_3.text(), self.lineEdit_5.text(),
-                self.lineEdit_6.text(), self.lineEdit_4.text())
+                self.red.text(), self.green.text(), self.blue.text(), self.font.text(),
+                self.background.text(), self.word_spacing.text(), self.word_spacing_sigma.text(), self.line_spacing.text(),
+                self.line_spacing_sigma.text(), self.font_size.text(), self.font_size_sigma.text(), self.perturb_x_sigma.text(),
+                self.perturb_y_sigma.text(), self.perturb_theta_sigma.text(), self.top_margin.text(), self.left_margin.text(),
+                self.right_margin.text(), self.bottom_margin.text())
             with open(file=file_path, mode='w', encoding='utf-8') as file:
                 file.write(file_text)
-
-    def zairu(self):
+    # 载入
+    def load(self):
         file_path = getfile()
         if file_path != "":
-            shuju = []
+            data = []
             if file_path is not None:
                 with open(file=file_path, mode='r+', encoding='utf-8') as f:
                     for line in f.readlines():
                         line = line.strip('\n')  # 去掉列表中每一个元素的换行符
-                        shuju.append(line)
-            self.lineEdit_10.setText(shuju[0])
-            self.lineEdit_11.setText(shuju[1])
-            self.lineEdit_12.setText(shuju[2])
-            self.lineEdit.setText(shuju[3])
-            self.lineEdit_2.setText(shuju[4])
-            self.lineEdit_7.setText(shuju[5])
-            self.spinBox.setValue(int(shuju[6]))
-            self.lineEdit_8.setText(shuju[7])
-            self.spinBox_2.setValue(int(shuju[8]))
-            self.lineEdit_9.setText(shuju[9])
-            self.spinBox_3.setValue(int(shuju[10]))
-            self.spinBox_5.setValue(int(shuju[11]))
-            self.spinBox_4.setValue(int(shuju[12]))
-            self.doubleSpinBox_6.setValue(float(shuju[13]))
-            self.lineEdit_3.setText(shuju[14])
-            self.lineEdit_5.setText(shuju[15])
-            self.lineEdit_6.setText(shuju[16])
-            self.lineEdit_4.setText(shuju[17])
+                        data.append(line)
+            self.red.setText(data[0])
+            self.green.setText(data[1])
+            self.blue.setText(data[2])
+            self.font.setText(data[3])
+            self.background.setText(data[4])
+            self.word_spacing.setText(data[5])
+            self.word_spacing_sigma.setValue(int(data[6]))
+            self.line_spacing.setText(data[7])
+            self.line_spacing_sigma.setValue(int(data[8]))
+            self.font_size.setText(data[9])
+            self.font_size_sigma.setValue(int(data[10]))
+            self.perturb_x_sigma.setValue(int(data[11]))
+            self.perturb_y_sigma.setValue(int(data[12]))
+            self.perturb_theta_sigma.setValue(float(data[13]))
+            self.top_margin.setText(data[14])
+            self.left_margin.setText(data[15])
+            self.right_margin.setText(data[16])
+            self.bottom_margin.setText(data[17])
 
-    def yulan(self):
-        text = self.textEdit.toPlainText()
 
-        ziti = self.lineEdit.text()
-        beijing = self.lineEdit_2.text()
-        zspjj = self.lineEdit_7.text()
-        zspjj_ = self.spinBox.text()
-        zszjj = self.lineEdit_8.text()
-        zszjj_ = self.spinBox_2.text()
-        ztdx = self.lineEdit_9.text()
-        ztdx_ = self.spinBox_3.text()
-        spbhwy_ = self.spinBox_5.text()
-        szbhwy_ = self.spinBox_4.text()
-        bhxz_ = self.doubleSpinBox_6.text()
-        bianju_left = self.lineEdit_5.text()
-        bianju_right = self.lineEdit_6.text()
-        bianju_up = self.lineEdit_3.text()
-        bianju_down = self.lineEdit_4.text()
-        red = self.lineEdit_10.text()
-        green = self.lineEdit_11.text()
-        blue = self.lineEdit_12.text()
-        if ziti == "" or zspjj == "" or bianju_down == "":
+    # 预览
+    def preview(self):
+        if self.font.text() == "" or self.word_spacing.text() == "" or self.bottom_margin.text() == "":
             QMessageBox.information(self, "检查参数", "请检查参数是否完整")
-        elif text == "":
+        elif self.pending_text.toPlainText() == "":
             QMessageBox.information(self, "!!!", "未输入要处理的文字")
-        elif not os.path.exists(ziti):
+        elif not os.path.exists(self.font.text()):
             QMessageBox.information(self, "路径错误", "字体指定的路径不存在")
-        elif not os.path.exists(beijing):
+        elif not os.path.exists(self.background.text()):
             QMessageBox.information(self, "路径错误", "背景指定的路径不存在")
         else:
-            def run():
-                self.pushButton_3.setEnabled(False)
-                template = Template(
-                    background=Image.open(beijing),
-                    font=ImageFont.truetype(ziti, size=int(ztdx)),
-                    line_spacing=int(zszjj) + int(ztdx),
-                    fill=(int(red), int(green), int(blue)),  # 字体“颜色”
-                    left_margin=int(bianju_left),
-                    top_margin=int(bianju_up),
-                    right_margin=int(bianju_right) - int(zspjj) * 2,
-                    bottom_margin=int(bianju_down),
-                    word_spacing=int(zspjj),
-                    line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
-                    font_size_sigma=int(ztdx_),  # 字体大小随机扰动
-                    word_spacing_sigma=int(zspjj_),  # 字间距随机扰动
-                    end_chars="，。",  # 防止特定字符因排版算法的自动换行而出现在行首
-                    perturb_x_sigma=int(spbhwy_),  # 笔画横向偏移随机扰动
-                    perturb_y_sigma=int(szbhwy_),  # 笔画纵向偏移随机扰动
-                    perturb_theta_sigma=float(bhxz_),  # 笔画旋转偏移随机扰动
-                )
-                images = handwrite(text, template)
-                for i, im in enumerate(images):
-                    im = im.convert("RGBA")
-                    image = ImageQt.toqpixmap(im)
+            # 按钮变灰，防止二次导出
+            self.preview_button.setEnabled(False)
+            images = self.run()
+            for i, im in enumerate(images):
+                im = im.convert("RGBA")
+                image = ImageQt.toqpixmap(im)
+                self.preview_area.setScaledContents(True)
+                self.preview_area.setPixmap(image)
+                # 恢复导出按钮
+                self.preview_button.setEnabled(True)
+                break
+            
 
-                    self.label_11.setScaledContents(True)
-                    self.label_11.setPixmap(image)
-                    self.pushButton_3.setEnabled(True)
-                    break
 
-            t = Thread(target=run)
-            t.start()
-
-    def daochu(self):
-
-        text = self.textEdit.toPlainText()
-        ziti = self.lineEdit.text()
-        beijing = self.lineEdit_2.text()
-        zspjj = self.lineEdit_7.text()
-        zspjj_ = self.spinBox.text()
-        zszjj = self.lineEdit_8.text()
-        zszjj_ = self.spinBox_2.text()
-        ztdx = self.lineEdit_9.text()
-        ztdx_ = self.spinBox_3.text()
-        spbhwy_ = self.spinBox_5.text()
-        szbhwy_ = self.spinBox_4.text()
-        bhxz_ = self.doubleSpinBox_6.text()
-        bianju_left = self.lineEdit_5.text()
-        bianju_right = self.lineEdit_6.text()
-        bianju_up = self.lineEdit_3.text()
-        bianju_down = self.lineEdit_4.text()
-        red = self.lineEdit_10.text()
-        green = self.lineEdit_11.text()
-        blue = self.lineEdit_12.text()
-        if ziti == "" or zspjj == "" or bianju_down == "":
+    # 导出
+    def export(self):
+        print(self.get_template())
+        if self.font.text() == "" or self.word_spacing.text() == "" or self.bottom_margin.text() == "":
             QMessageBox.information(self, "检查参数", "请检查参数是否完整")
-        elif text == "":
+        elif self.pending_text.toPlainText() == "":
             QMessageBox.information(self, "!!!", "未输入要处理的文字")
-        elif not os.path.exists(ziti):
+        elif not os.path.exists(self.font.text()):
             QMessageBox.information(self, "路径错误", "字体指定的路径不存在")
-        elif not os.path.exists(beijing):
+        elif not os.path.exists(self.background.text()):
             QMessageBox.information(self, "路径错误", "背景指定的路径不存在")
         else:
             if not os.path.exists("./output"):
                 os.mkdir("./output")
-            self.pushButton_5.setEnabled(False)
-
-            def run():
-                template = Template(
-                    background=Image.open(beijing),
-                    font=ImageFont.truetype(ziti, size=int(ztdx)),
-                    line_spacing=int(zszjj) + int(ztdx),
-                    fill=(int(red), int(green), int(blue)),  # 字体“颜色”
-                    left_margin=int(bianju_left),
-                    top_margin=int(bianju_up),
-                    right_margin=int(bianju_right) - int(zspjj) * 2,
-                    bottom_margin=int(bianju_down),
-                    word_spacing=int(zspjj),
-                    line_spacing_sigma=int(zszjj_),  # 行间距随机扰动
-                    font_size_sigma=int(ztdx_),  # 字体大小随机扰动
-                    word_spacing_sigma=int(zspjj_),  # 字间距随机扰动
-                    end_chars="，。",  # 防止特定字符因排版算法的自动换行而出现在行首
-                    perturb_x_sigma=int(spbhwy_),  # 笔画横向偏移随机扰动
-                    perturb_y_sigma=int(szbhwy_),  # 笔画纵向偏移随机扰动
-                    perturb_theta_sigma=float(bhxz_),  # 笔画旋转偏移随机扰动
-                )
-                images = handwrite(text, template)
-                for i, im in enumerate(images):
-                    assert isinstance(im, Image.Image)
-                    im.save("./output/{}.png".format(i))
-                self.sendmsg.emit()
-                self.pushButton_5.setEnabled(True)
-
-            t = Thread(target=run)
-            t.start()
+            # 处理过程中导出按钮不可用，防止二次导出。
+            self.export_button.setEnabled(False)
+            images = self.run()
+            for i, im in enumerate(images):
+                assert isinstance(im, Image.Image)
+                im.save("./output/{}.png".format(i))
+            self.sendmsg.emit()
+            # 恢复导出按钮
+            self.export_button.setEnabled(True)
 
 
+    def check(self):
+        '''检查是否合规'''
+        pass
+
+
+    def get_template(self):
+        template = Template(
+            # 背景
+            background=Image.open(self.background.text()),
+            # 字体
+            font=ImageFont.truetype(self.font.text(), size=int(self.font_size.text())),
+            # 行距
+            line_spacing=int(self.line_spacing.text()) + int(self.font_size.text()),
+            # 字体“颜色”
+            fill=(int(self.red.text()), int(self.green.text()), int(self.blue.text())),
+            # 左边距
+            left_margin=int(self.left_margin.text()),
+            # 上边距
+            top_margin=int(self.top_margin.text()),
+            # 右边距
+            right_margin=int(self.right_margin.text()),
+            # 下边距
+            bottom_margin=int(self.bottom_margin.text()),
+            # 字间距
+            word_spacing=int(self.word_spacing.text()),
+            # 行间距随机扰动
+            line_spacing_sigma=int(self.line_spacing_sigma.text()),
+            # 字体大小随机扰动
+            font_size_sigma=int(self.font_size_sigma.text()),
+            # 字间距随机扰动
+            word_spacing_sigma=int(self.word_spacing_sigma.text()),
+            # 特定字符提前换行，防止出现在行尾
+            start_chars="“（[<",
+            # 防止特定字符因排版算法的自动换行而出现在行首
+            end_chars="，。",
+            # 笔画横向偏移随机扰动
+            perturb_x_sigma=int(self.perturb_x_sigma.text()),
+            # 笔画纵向偏移随机扰动
+            perturb_y_sigma=int(self.perturb_y_sigma.text()),
+            # 笔画旋转偏移随机扰动
+            perturb_theta_sigma=float(self.perturb_theta_sigma.text()),
+        )
+        return template
+    
+
+    def run(self):
+        '''运行handright代码'''
+        try:
+            if not os.path.exists("./output"):
+                os.mkdir("./output")
+            template = self.get_template()
+            images = handwrite(self.pending_text.toPlainText(), template)
+            return images
+        except:
+            pass
 
 
 def getfile():
