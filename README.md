@@ -30,9 +30,8 @@ env\Scripts\activate.bat
 pip install -r requirements.txt
 ```
 
-## 踩坑笔记
-- [ ] 考虑重构预览和导出，代码重复度较高
-- [ ] ObjectName不知道在写什么，也许是Qt design直接做的ui？
+## 缺陷
+原本的run()函数重构为方法后无法使用多线程，期待后人的智慧
 
 # Electron跨平台版本
 
