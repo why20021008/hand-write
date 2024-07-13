@@ -81,23 +81,23 @@ class mainwindow(QMainWindow, Ui_Form):
         elif not os.path.exists(self.background.text()):
             QMessageBox.information(self, "路径错误", "背景指定的路径不存在")
         else:
+            # 按钮变灰，防止二次导出
             self.preview_button.setEnabled(False)
             images = self.run()
             for i, im in enumerate(images):
                 im = im.convert("RGBA")
                 image = ImageQt.toqpixmap(im)
-
                 self.preview_area.setScaledContents(True)
                 self.preview_area.setPixmap(image)
+                # 恢复导出按钮
                 self.preview_button.setEnabled(True)
                 break
-            # 新线程
-            # t = Thread(target=run)
-            # t.start()
+            
 
 
     # 导出
     def export(self):
+        print(self.get_template())
         if self.font.text() == "" or self.word_spacing.text() == "" or self.bottom_margin.text() == "":
             QMessageBox.information(self, "检查参数", "请检查参数是否完整")
         elif self.pending_text.toPlainText() == "":
@@ -118,9 +118,7 @@ class mainwindow(QMainWindow, Ui_Form):
             self.sendmsg.emit()
             # 恢复导出按钮
             self.export_button.setEnabled(True)
-            # 新线程
-            # t = Thread(target=run)
-            # t.start()
+
 
     def check(self):
         '''检查是否合规'''
@@ -130,7 +128,7 @@ class mainwindow(QMainWindow, Ui_Form):
     def get_template(self):
         template = Template(
             # 背景
-            background=Image.new(self.background.text()),
+            background=Image.open(self.background.text()),
             # 字体
             font=ImageFont.truetype(self.font.text(), size=int(self.font_size.text())),
             # 行距
@@ -162,7 +160,7 @@ class mainwindow(QMainWindow, Ui_Form):
             # 笔画纵向偏移随机扰动
             perturb_y_sigma=int(self.perturb_y_sigma.text()),
             # 笔画旋转偏移随机扰动
-            perturb_theta_sigma=int(self.perturb_theta_sigma.text()),
+            perturb_theta_sigma=float(self.perturb_theta_sigma.text()),
         )
         return template
     
@@ -173,7 +171,7 @@ class mainwindow(QMainWindow, Ui_Form):
             if not os.path.exists("./output"):
                 os.mkdir("./output")
             template = self.get_template()
-            images = handwrite(self.pending_text, template)
+            images = handwrite(self.pending_text.toPlainText(), template)
             return images
         except:
             pass
