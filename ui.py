@@ -42,10 +42,10 @@ class Ui_Form(object):
         self.pending_text.setObjectName("textEdit")
 
         # 字体选择路径
-        self.handwrite_font = QtWidgets.QLineEdit(Form)
-        self.handwrite_font.setGeometry(QtCore.QRect(480, 280, 311, 20))
-        self.handwrite_font.setText("")
-        self.handwrite_font.setObjectName("lineEdit")
+        self.font = QtWidgets.QLineEdit(Form)
+        self.font.setGeometry(QtCore.QRect(480, 280, 311, 20))
+        self.font.setText("")
+        self.font.setObjectName("lineEdit")
 
         # 字体选择按钮
         self.font_selection_button = QtWidgets.QPushButton(Form)
@@ -60,84 +60,84 @@ class Ui_Form(object):
         self.background_selection_button.setObjectName("pushButton_2")
 
         # 背景选择路径
-        self.background_selection_path = QtWidgets.QLineEdit(Form)
-        self.background_selection_path.setGeometry(QtCore.QRect(480, 310, 311, 20))
-        self.background_selection_path.setText("")
-        self.background_selection_path.setObjectName("lineEdit_2")
+        self.background = QtWidgets.QLineEdit(Form)
+        self.background.setGeometry(QtCore.QRect(480, 310, 311, 20))
+        self.background.setText("")
+        self.background.setObjectName("lineEdit_2")
         
         # 上边距文本框
-        self.top_margin_edit = QtWidgets.QLineEdit(Form)
-        self.top_margin_edit.setGeometry(QtCore.QRect(720, 357, 61, 24))
-        self.top_margin_edit.setText("")
-        self.top_margin_edit.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.top_margin_edit.setObjectName("top_margin")
+        self.top_margin = QtWidgets.QLineEdit(Form)
+        self.top_margin.setGeometry(QtCore.QRect(720, 357, 61, 24))
+        self.top_margin.setText("")
+        self.top_margin.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.top_margin.setObjectName("top_margin")
         
         # 下边距文本框
-        self.bottom_margin_edit = QtWidgets.QLineEdit(Form)
-        self.bottom_margin_edit.setGeometry(QtCore.QRect(720, 431, 61, 24))
-        self.bottom_margin_edit.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.bottom_margin_edit.setObjectName("lineEdit_4")
+        self.bottom_margin = QtWidgets.QLineEdit(Form)
+        self.bottom_margin.setGeometry(QtCore.QRect(720, 431, 61, 24))
+        self.bottom_margin.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.bottom_margin.setObjectName("lineEdit_4")
         
         # 左边距文本框
-        self.left_margin_edit = QtWidgets.QLineEdit(Form)
-        self.left_margin_edit.setGeometry(QtCore.QRect(697, 380, 24, 51))
-        self.left_margin_edit.setText("")
-        self.left_margin_edit.setObjectName("lineEdit_5")
+        self.left_margin = QtWidgets.QLineEdit(Form)
+        self.left_margin.setGeometry(QtCore.QRect(697, 380, 24, 51))
+        self.left_margin.setText("")
+        self.left_margin.setObjectName("lineEdit_5")
 
         # 右边距文本框
-        self.right_margin_edit = QtWidgets.QLineEdit(Form)
-        self.right_margin_edit.setGeometry(QtCore.QRect(780, 380, 24, 51))
-        self.right_margin_edit.setObjectName("lineEdit_6")
+        self.right_margin = QtWidgets.QLineEdit(Form)
+        self.right_margin.setGeometry(QtCore.QRect(780, 380, 24, 51))
+        self.right_margin.setObjectName("lineEdit_6")
 
         # 字水平边距设置框
-        self.word_horizontal_margin_box = QtWidgets.QSpinBox(Form)
-        self.word_horizontal_margin_box.setGeometry(QtCore.QRect(600, 360, 51, 20))
-        self.word_horizontal_margin_box.setObjectName("spinBox")
+        self.word_spacing_sigma = QtWidgets.QSpinBox(Form)
+        self.word_spacing_sigma.setGeometry(QtCore.QRect(600, 360, 51, 20))
+        self.word_spacing_sigma.setObjectName("spinBox")
 
         # 字水平边距文本框
-        self.word_horizontal_margin_edit = QtWidgets.QLineEdit(Form)
-        self.word_horizontal_margin_edit.setGeometry(QtCore.QRect(514, 360, 74, 20))
-        self.word_horizontal_margin_edit.setObjectName("lineEdit_7")
+        self.word_spacing = QtWidgets.QLineEdit(Form)
+        self.word_spacing.setGeometry(QtCore.QRect(514, 360, 74, 20))
+        self.word_spacing.setObjectName("lineEdit_7")
 
         # 字竖直边距文本框
-        self.word_vertical_margin_edit = QtWidgets.QLineEdit(Form)
-        self.word_vertical_margin_edit.setGeometry(QtCore.QRect(514, 400, 74, 20))
-        self.word_vertical_margin_edit.setObjectName("lineEdit_8")
+        self.line_spacing = QtWidgets.QLineEdit(Form)
+        self.line_spacing.setGeometry(QtCore.QRect(514, 400, 74, 20))
+        self.line_spacing.setObjectName("lineEdit_8")
         
         # 字竖直边距设置框
-        self.word_vertical_margin_box = QtWidgets.QSpinBox(Form)
-        self.word_vertical_margin_box.setGeometry(QtCore.QRect(600, 400, 51, 20))
-        self.word_vertical_margin_box.setObjectName("spinBox_2")
+        self.line_spacing_sigma = QtWidgets.QSpinBox(Form)
+        self.line_spacing_sigma.setGeometry(QtCore.QRect(600, 400, 51, 20))
+        self.line_spacing_sigma.setObjectName("spinBox_2")
         
         # 字体大小文本框
-        self.font_size_edit = QtWidgets.QLineEdit(Form)
-        self.font_size_edit.setGeometry(QtCore.QRect(514, 440, 74, 20))
-        self.font_size_edit.setObjectName("lineEdit_9")
+        self.font_size = QtWidgets.QLineEdit(Form)
+        self.font_size.setGeometry(QtCore.QRect(514, 440, 74, 20))
+        self.font_size.setObjectName("lineEdit_9")
         
         # 字体大小设置框
-        self.font_size_box = QtWidgets.QSpinBox(Form)
-        self.font_size_box.setGeometry(QtCore.QRect(600, 440, 51, 20))
-        self.font_size_box.setObjectName("spinBox_3")
+        self.font_size_sigma = QtWidgets.QSpinBox(Form)
+        self.font_size_sigma.setGeometry(QtCore.QRect(600, 440, 51, 20))
+        self.font_size_sigma.setObjectName("spinBox_3")
         
         # 竖直笔画偏移设置框
-        self.vertical_stroke_offset = QtWidgets.QSpinBox(Form)
-        self.vertical_stroke_offset.setGeometry(QtCore.QRect(600, 520, 51, 20))
-        self.vertical_stroke_offset.setProperty("value", 4)
-        self.vertical_stroke_offset.setObjectName("spinBox_4")
+        self.perturb_y_sigma = QtWidgets.QSpinBox(Form)
+        self.perturb_y_sigma.setGeometry(QtCore.QRect(600, 520, 51, 20))
+        self.perturb_y_sigma.setProperty("value", 4)
+        self.perturb_y_sigma.setObjectName("spinBox_4")
         
         # 水平笔画偏移设置框
-        self.horizontal_stroke_offset = QtWidgets.QSpinBox(Form)
-        self.horizontal_stroke_offset.setGeometry(QtCore.QRect(600, 480, 51, 20))
-        self.horizontal_stroke_offset.setProperty("value", 4)
-        self.horizontal_stroke_offset.setObjectName("spinBox_5")
+        self.perturb_x_sigma = QtWidgets.QSpinBox(Form)
+        self.perturb_x_sigma.setGeometry(QtCore.QRect(600, 480, 51, 20))
+        self.perturb_x_sigma.setProperty("value", 4)
+        self.perturb_x_sigma.setObjectName("spinBox_5")
         
         # 笔画旋转设置框
-        self.stroke_rotation_box = QtWidgets.QDoubleSpinBox(Form)
-        self.stroke_rotation_box.setGeometry(QtCore.QRect(600, 560, 51, 20))
-        self.stroke_rotation_box.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.stroke_rotation_box.setSingleStep(0.01)
-        self.stroke_rotation_box.setProperty("value", 0.05)
-        self.stroke_rotation_box.setObjectName("doubleSpinBox_6")
+        self.perturb_theta_sigma = QtWidgets.QDoubleSpinBox(Form)
+        self.perturb_theta_sigma.setGeometry(QtCore.QRect(600, 560, 51, 20))
+        self.perturb_theta_sigma.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.perturb_theta_sigma.setSingleStep(0.01)
+        self.perturb_theta_sigma.setProperty("value", 0.05)
+        self.perturb_theta_sigma.setObjectName("doubleSpinBox_6")
 
         # 预览按钮
         self.preview_button = QtWidgets.QPushButton(Form)
@@ -196,23 +196,23 @@ class Ui_Form(object):
         # 显示控件？
         self.main_interface.raise_()
         self.pending_text.raise_()
-        self.handwrite_font.raise_()
+        self.font.raise_()
         self.font_selection_button.raise_()
         self.background_selection_button.raise_()
-        self.background_selection_path.raise_()
-        self.top_margin_edit.raise_()
-        self.bottom_margin_edit.raise_()
-        self.left_margin_edit.raise_()
-        self.right_margin_edit.raise_()
-        self.word_horizontal_margin_box.raise_()
-        self.word_horizontal_margin_edit.raise_()
-        self.word_vertical_margin_edit.raise_()
-        self.word_vertical_margin_box.raise_()
-        self.font_size_edit.raise_()
-        self.font_size_box.raise_()
-        self.vertical_stroke_offset.raise_()
-        self.horizontal_stroke_offset.raise_()
-        self.stroke_rotation_box.raise_()
+        self.background.raise_()
+        self.top_margin.raise_()
+        self.bottom_margin.raise_()
+        self.left_margin.raise_()
+        self.right_margin.raise_()
+        self.word_spacing_sigma.raise_()
+        self.word_spacing.raise_()
+        self.line_spacing.raise_()
+        self.line_spacing_sigma.raise_()
+        self.font_size.raise_()
+        self.font_size_sigma.raise_()
+        self.perturb_y_sigma.raise_()
+        self.perturb_x_sigma.raise_()
+        self.perturb_theta_sigma.raise_()
         self.preview_button.raise_()
         self.export_button.raise_()
         self.preview_area.raise_()
@@ -230,10 +230,10 @@ class Ui_Form(object):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "手写模拟"))
         self.pending_text.setPlaceholderText(_translate("Form", "本软件主要基于handwrite库开发，仅供学习交流。作者只是一名为手写作业发愁的大学生，想要源码或者想要添加功能、反馈bug的，可以联系作者b站：人走茶凉le"))
-        self.handwrite_font.setAccessibleDescription(_translate("Form", "1111"))
+        self.font.setAccessibleDescription(_translate("Form", "1111"))
         self.font_selection_button.setText(_translate("Form", "选择"))
         self.background_selection_button.setText(_translate("Form", "选择"))
-        self.background_selection_path.setAccessibleDescription(_translate("Form", "1111"))
+        self.background.setAccessibleDescription(_translate("Form", "1111"))
         self.preview_button.setText(_translate("Form", "预览"))
         self.export_button.setText(_translate("Form", "导出"))
         self.save_button.setText(_translate("Form", "保存"))
