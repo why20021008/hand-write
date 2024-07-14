@@ -4,6 +4,8 @@
 
 # Qt版本
 
+下载链接：[手写模拟（windows）.zip](https://p74h-my.sharepoint.com/:u:/g/personal/minddance_p74h_onmicrosoft_com/EQthU08XKatJheO1tAAZY8UBMn7yyhQJh6n4OnbmYDgAfQ?e=RRx9W2)
+
 ## 贡献者
 why20021008（人走茶凉le）编写核心代码，Vincent Zhong（思维悦动）负责文档撰写，Qt版本的注释，并优化变量、函数、属性、方法的命名，去除歧义。
 
@@ -22,14 +24,14 @@ Windows的命令行环境推荐`powershell`（下文简称PS），相比于`cmd`
 
 在本文件夹右键打开终端（或者在终端切换至本目录），构建虚拟环境。
 ```powershell
-python -m venv env
+py -3 -m venv venv
 ```
 激活虚拟环境
 ```powershell
-env\Scripts\activate.bat
+venv\Scripts\activate
 ```
 
-创建完成后，从requirements.txt中安装所需包
+激活后，你的终端提示符会显示虚拟环境的名称。创建完成后，从requirements.txt中安装所需包
 
 ```powershell
 pip install -r requirements.txt
