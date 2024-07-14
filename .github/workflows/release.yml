@@ -1,0 +1,52 @@
+name: Build and Release
+
+on:
+  push:
+    branches:
+      - main # 当推送至main分支时触发
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest # 使用Windows环境进行构建
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Install requirements.txt
+      run: pip install -r requirements.txt
+    - name: Install PyInstaller
+      run: pip install pyinstaller
+    - name: Build EXE with PyInstaller
+      run: pyinstaller -F main.py --windowed -i "ui/3d.ico" --add-data "ui/night.png:ui" -n "手写模拟"
+
+    # 打包EXE和UI文件夹为ZIP
+    - name: Package EXE and UI folder
+      run: |
+        Copy-Item -Path "ui" -Destination "dist" -Recurse
+        cd dist
+        7z a ./release_package.zip 手写模拟.exe ui # 修正路径和假设ui已复制到dist中
+
+   
+    # 创建GitHub Release并上传ZIP文件
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 自动授权的Token
+      with:
+        tag_name: ${{ github.run_number }} # 可以根据需要修改tag命名规则
+        release_name: Release ${{ github.run_number }}
+        draft: false
+        prerelease: false
+
+    # 上传ZIP文件为Release Asset
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # 从上一步骤中获取上传URL
+        asset_path: dist/release_package.zip
+        asset_name: Release-${{ github.run_number }}.zip
+        asset_content_type: application/zip
