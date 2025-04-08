@@ -4,10 +4,21 @@
 
 # Qt版本
 
-下载链接：[手写模拟（windows）.zip](https://p74h-my.sharepoint.com/:u:/g/personal/minddance_p74h_onmicrosoft_com/EQthU08XKatJheO1tAAZY8UBMn7yyhQJh6n4OnbmYDgAfQ?e=RRx9W2)
+下载链接：
+[手写模拟-百度云](https://pan.baidu.com/s/16ReiVqKryIHkT84_qE5v7g?pwd=yn1z)  
+提取码：yn1z
+
+[手写模拟-OneDrive](https://1drv.ms/f/c/ce2d233c2ff03eb6/Epk-2WVaIn5DisGzqWhm94IBhVRN6T8sp6qCO_CyVTpuaQ?e=jSkagp)  
+可能要魔法
+
+[手写模拟-蓝奏云](https://wwuv.lanzouw.com/b00ocwmfcj)  
+密码:1i7j
+
+[手写模拟-storj](https://link.storjshare.io/s/jvihgwockwfdww3bcahovmqfiola/fpa-cdn/hand-write/release/)  
+兼容s3存储桶，可能要魔法，不限速，已设置每月下载限制10GB，如果无法下载请选择其他链接。
 
 ## 贡献者
-why20021008（人走茶凉le）编写核心代码，Vincent Zhong（思维悦动）负责文档撰写，Qt版本的注释，并优化变量、函数、属性、方法的命名，去除歧义。
+why20021008（人走茶凉le）编写核心代码，Vincent Zhong（茶杯不能煮咖啡）负责文档撰写，Qt版本的注释，并优化变量、函数、属性、方法的命名，去除歧义。
 
 # 使用说明
 
