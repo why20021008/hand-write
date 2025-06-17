@@ -1,10 +1,20 @@
 # 手写模拟
 
-[人走茶凉le](https://space.bilibili.com/354163879)的软件及其二次开发版本。up主的源代码为Qt版本。
+本项目以GUI交互的形式生成并导出足以媲美真人手写的文档图片。
 
-# Qt版本
+## 使用
 
-下载链接：
+### 界面
+
+![界面](assets/qt界面.png)
+
+### 效果
+
+![效果](assets/效果.png)
+
+### 下载链接
+
+以下任选一个方式下载。
 
 [手写模拟-百度云](https://pan.baidu.com/s/16ReiVqKryIHkT84_qE5v7g?pwd=yn1z)  
 提取码：yn1z
@@ -13,34 +23,21 @@
 可能要魔法
 
 [手写模拟-蓝奏云](https://wwuv.lanzouw.com/b00ocwmfcj)  
-密码:1i7j
-
-[手写模拟-storj](https://link.storjshare.io/s/jvihgwockwfdww3bcahovmqfiola/fpa-cdn/hand-write/release/)  
-兼容s3存储桶，可能要魔法，不限速，已设置每月下载限制10GB，如果无法下载请选择其他链接。
-
-## 贡献者
-why20021008（人走茶凉le）编写核心代码，Vincent Zhong（茶杯不能煮咖啡）负责文档撰写，Qt版本的注释，并优化变量、函数、属性、方法的命名，去除歧义。
-
-# 使用说明
-
-在右侧release处下载最新的包。然后下载常用的文件夹资源集合包，解压到同一个文件夹下即可运行。
+密码:1i7
 
 ## 开发环境构建
 
-推荐使用VScode，已配置`.vscode`配置文件，使用其他IDE需要自行配置，如果你愿意分享教程，欢迎提出PR！  
-目前构建开发环境仅提供Windows系统配置教程，Mac和Linux的可以在下方参考资料中找到，如果你愿意写这两个系统的虚拟环境配置教程，欢迎提出PR！  
-Windows的命令行环境推荐`powershell`（下文简称PS），相比于`cmd`，PS支持面向对象等一系列新功能，功能更加强大。  
-受限于篇幅，更详细的资料请在下方参考资料查看原文档。
-
-首先需要创建Python虚拟环境，避免本项目与全局环境相互污染。根据Qt for Python文档，执行以下操作。
+首先需要创建Python虚拟环境，避免本项目与全局环境相互污染。
 
 在本文件夹右键打开终端（或者在终端切换至本目录），构建虚拟环境。
+
 ```powershell
-py -3 -m venv venv
+python3 -m venv .venv
 ```
+
 激活虚拟环境
 ```powershell
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 
 激活后，你的终端提示符会显示虚拟环境的名称。创建完成后，从requirements.txt中安装所需包
@@ -55,19 +52,22 @@ pip install -r requirements.txt
 pyinstaller -F main.py --windowed -i "ui/3d.ico" --add-data "ui/night.png:ui" -n "手写模拟"
 ```
 
-## 缺陷
-原本的run()函数重构为方法后无法使用多线程，期待后人的智慧
+## 路线图
 
-## 代码贡献
-项目已经设置git action，一旦提交代码到`main`分支，就会自动编译、打包并发布。建议所有的修复bug与添加新功能的工作通过新开分支的方式进行，执行完后合并到主分支。
+🚧开发ing🚧
 
-项目已经设置`gitignore`，会忽略常见的构建产物。
+- [ ] Web前端工程：收集参数后以api的形式发给后端
+- [ ] Flask后端工程：收集api中的参数后调用handright库
+- [ ] Python托盘图标应用：常驻任务栏右下角
+- [ ] 应用打包：打包为一个压缩包或者安装包
 
-# Electron跨平台版本
+可能会加的功能（想做，但是有点过于复杂，不一定能做）
 
-🚧正在开发🚧
+- [ ] 自由排版
+- [ ] 手写公式
 
-# 参考资料
+## 相关链接
+
 [Qt for Python文档](https://doc.qt.io/qtforpython-6/quickstart.html)
 
 [handright使用教程](https://github.com/Gsllchb/Handright/blob/master/docs/tutorial.md)

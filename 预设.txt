@@ -2,7 +2,7 @@
 0
 0
 Fonts/云烟体.ttf
-Backgrang/white-A4.jpeg
+background/white-A4.jpeg
 15
 3
 150
